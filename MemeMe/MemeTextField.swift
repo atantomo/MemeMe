@@ -12,5 +12,5 @@ import UIKit
 class MemeTextField: UITextField {
     
     // to keep track whether text field should clear its value when editing begins
-    var hasBeenEdited: Bool = false
+    var edited: Bool = false
 }

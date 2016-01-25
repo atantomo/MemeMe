@@ -98,7 +98,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func textFieldChanged(sender: MemeTextField) {
-        sender.hasBeenEdited = true
+        sender.edited = true
     }
     
     func subscribeToKeyboardNotifications() {
@@ -145,7 +145,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activeField = textField
         
         if let memeTextField = textField as? MemeTextField {
-            if (!memeTextField.hasBeenEdited) {
+            // Only clear default text (texts created by user should not be removed)
+            if (!memeTextField.edited) {
                 memeTextField.text = ""
             }
         }
@@ -153,16 +154,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func textFieldDidEndEditing(textField: UITextField) {
         
-        if (textField.text == "") {
+        if let memeTextField = textField as? MemeTextField {
             
-            switch (textField) {
+            // Trim excess whitespaces
+            var newText = memeTextField.text! as NSString
+            newText = newText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            memeTextField.text = newText as String
+            
+            // Restore default text when text field is empty after editing
+            if (memeTextField.text == "") {
                 
-            case topTextField:
-                textField.text = defaultTopText
-            case bottomTextField:
-                textField.text = defaultBottomText
-            default:
-                break
+                switch (memeTextField) {
+                    
+                case topTextField:
+                    memeTextField.text = defaultTopText
+                case bottomTextField:
+                    memeTextField.text = defaultBottomText
+                default:
+                    break
+                }
+                memeTextField.edited = false
             }
         }
     }

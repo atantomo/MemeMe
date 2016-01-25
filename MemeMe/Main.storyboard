@@ -19,10 +19,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vm2-UF-zq3">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="PSE-eQ-cT8" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="20" y="92" width="560" height="34"/>
+                                <rect key="frame" x="20" y="72" width="560" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -30,7 +29,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="LKY-S4-edb" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="20" y="494" width="560" height="34"/>
+                                <rect key="frame" x="20" y="514" width="560" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -60,9 +59,9 @@
                         <constraints>
                             <constraint firstItem="LKY-S4-edb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="AeN-We-eID"/>
                             <constraint firstItem="Vm2-UF-zq3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BHU-pR-knM"/>
-                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="28" id="SxJ-8F-Mkw"/>
+                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="SxJ-8F-Mkw"/>
                             <constraint firstItem="Vm2-UF-zq3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="TWa-Pr-GcC"/>
-                            <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="LKY-S4-edb" secondAttribute="bottom" constant="28" id="WXM-Gy-Lzo"/>
+                            <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="LKY-S4-edb" secondAttribute="bottom" constant="8" id="WXM-Gy-Lzo"/>
                             <constraint firstItem="PSE-eQ-cT8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bR7-k4-7gb"/>
                             <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="Vm2-UF-zq3" secondAttribute="bottom" id="eU2-vV-m2n"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jzg-xc-NEY" secondAttribute="bottom" id="fBd-az-ufH"/>

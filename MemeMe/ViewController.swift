@@ -23,28 +23,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var pickerToolbar: UIToolbar!
     
-    var activeField = UITextField()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
          // Do any additional setup after loading the view, typically from a nib.
         
         shareButton.enabled = false
-        memeImageView.contentMode = .ScaleAspectFill
+        memeImageView.contentMode = .ScaleAspectFit
         
-        let textAttr = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : -4.0,
-        ]
-        
-        for memeTextField in [topTextField, bottomTextField] {
-            memeTextField.delegate = self
-            memeTextField.defaultTextAttributes = textAttr
-            memeTextField.textAlignment = .Center
-            memeTextField.autocapitalizationType = .AllCharacters
-        }
+        setupMemeTextField(topTextField)
+        setupMemeTextField(bottomTextField)
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,9 +59,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let activityViewCtrl = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         activityViewCtrl.completionWithItemsHandler = {(activityType: String?, completed: Bool, returnedItems: [AnyObject]?, activityError: NSError?) -> () in
             
-            if (activityType == UIActivityTypeSaveToCameraRoll) {
-                
+            if (completed) {
                 self.save(memedImage)
+            }
+            if (activityType == UIActivityTypeSaveToCameraRoll) {
                 self.showConfirmationMessage()
             }
         }
@@ -116,9 +104,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func keyboardWillShow(notification: NSNotification) {
         
         let keyboardHeight = getKeyboardHeight(notification)
-        let textFieldBase = view.frame.size.height - (activeField.frame.origin.y + activeField.frame.size.height)
 
-        if (keyboardHeight > textFieldBase) {
+        if (bottomTextField.isFirstResponder()) {
             view.frame.origin.y -= keyboardHeight
         }
     }
@@ -141,8 +128,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        
-        activeField = textField
         
         if let memeTextField = textField as? MemeTextField {
             // Only clear default text (texts created by user should not be removed)
@@ -181,6 +166,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    private func setupMemeTextField(textField: UITextField) {
+        
+        let textAttr = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -4.0,
+        ]
+        
+        textField.delegate = self
+        textField.defaultTextAttributes = textAttr
+        textField.textAlignment = .Center
+        textField.autocapitalizationType = .AllCharacters
     }
     
     private func getKeyboardHeight(notification: NSNotification) -> CGFloat {

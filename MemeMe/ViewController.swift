@@ -23,6 +23,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var pickerToolbar: UIToolbar!
     
+    var prevKeyboardHeight: CGFloat = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
          // Do any additional setup after loading the view, typically from a nib.
@@ -106,12 +108,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let keyboardHeight = getKeyboardHeight(notification)
 
         if (bottomTextField.isFirstResponder()) {
-            view.frame.origin.y -= keyboardHeight
+            view.frame.origin.y = view.frame.origin.y - (keyboardHeight  - prevKeyboardHeight)
+            prevKeyboardHeight = keyboardHeight
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         view.frame.origin.y = 0
+        prevKeyboardHeight = 0.0
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -213,6 +217,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // TODO: Do something with the image (add to collection view, etc.)
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
             image: memeImageView.image!, memedImage: memedImage)
+        
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
         return meme
     }
     

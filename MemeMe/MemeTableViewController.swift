@@ -2,13 +2,13 @@
 //  MemeTableViewController.swift
 //  MemeMe
 //
-//  Created by Tantomo, Andrew | Andrew | ISDOD on 1/27/16.
-//  Copyright © 2016 Andrew Tantomo. All rights reserved.
+//  Created by Andrew Tantomo on 2016/01/23.
+//  Copyright © 2016年 Andrew Tantomo. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class MemeTableViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeTableViewController: UIViewController {
     
     let defaultTopText = "TOP"
     let defaultBottomText = "BOTTOM"

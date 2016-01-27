@@ -141,10 +141,10 @@
             </objects>
             <point key="canvasLocation" x="-410" y="1079"/>
         </scene>
-        <!--View Controller-->
+        <!--Meme Table View Controller-->
         <scene sceneID="jKb-7p-gra">
             <objects>
-                <viewController id="tR1-ez-ze6" sceneMemberID="viewController">
+                <viewController id="tR1-ez-ze6" customClass="MemeTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nzY-a2-Afe"/>
                         <viewControllerLayoutGuide type="bottom" id="KBB-Py-76P"/>

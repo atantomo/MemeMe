@@ -12,6 +12,7 @@ class MemeCollectionViewController: UIViewController {
     
     @IBOutlet weak var memeCollectionView: UICollectionView!
     
+    var memes: [Meme]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +20,8 @@ class MemeCollectionViewController: UIViewController {
         
         memeCollectionView.delegate = self
         memeCollectionView.dataSource = self
+        let applicatonDeletegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        memes = applicatonDeletegate.memes
         
     }
     
@@ -40,11 +43,11 @@ class MemeCollectionViewController: UIViewController {
 extension MemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        memes.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        <#code#>
+        memes[indexPath.row]
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

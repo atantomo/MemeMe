@@ -12,11 +12,9 @@ class MemeTableViewController: UIViewController {
     
     @IBOutlet weak var memeTableView: UITableView!
     
-    var memes: [Meme]! = {
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.memes
-    }()
+    var memes: [Meme] {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +23,8 @@ class MemeTableViewController: UIViewController {
         memeTableView.delegate = self
         memeTableView.dataSource = self
         
+        memeTableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
+        memeTableView.contentInset = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,6 +39,10 @@ class MemeTableViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        view.updateConstraints()
     }
     
 }

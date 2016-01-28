@@ -2,8 +2,8 @@
 //  MemeDetailViewController.swift
 //  MemeMe
 //
-//  Created by Tantomo, Andrew | Andrew | ISDOD on 1/28/16.
-//  Copyright © 2016 Andrew Tantomo. All rights reserved.
+//  Created by Andrew Tantomo on 2016/01/23.
+//  Copyright © 2016年 Andrew Tantomo. All rights reserved.
 //
 
 import UIKit

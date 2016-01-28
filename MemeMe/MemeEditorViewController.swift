@@ -34,6 +34,8 @@ class MemeEditorViewController: UIViewController {
         
         setupMemeTextField(topTextField)
         setupMemeTextField(bottomTextField)
+        
+        memeImageView.image?.size
     }
 
     override func didReceiveMemoryWarning() {

@@ -2,8 +2,8 @@
 //  MemeCollectionViewController.swift
 //  MemeMe
 //
-//  Created by Tantomo, Andrew | Andrew | ISDOD on 1/28/16.
-//  Copyright © 2016 Andrew Tantomo. All rights reserved.
+//  Created by Andrew Tantomo on 2016/01/23.
+//  Copyright © 2016年 Andrew Tantomo. All rights reserved.
 //
 
 import UIKit
@@ -13,11 +13,27 @@ class MemeCollectionViewController: UIViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var memeCollectionView: UICollectionView!
     
-    var memes: [Meme]! = {
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.memes
-    }()
+    let itemSpacer: CGFloat = 8.0
+    
+    let portraitItemCount: CGFloat = 3.0
+    let landscapeItemCount: CGFloat = 5.0
+    
+    var itemCount: CGFloat{
+        get {
+            switch (UIDevice.currentDevice().orientation) {
+            case .Portrait, .PortraitUpsideDown:
+                return portraitItemCount
+            case .LandscapeLeft, .LandscapeRight:
+                return landscapeItemCount
+            default:
+                return portraitItemCount
+            }
+        }
+    }
+    
+    var memes: [Meme] {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +42,10 @@ class MemeCollectionViewController: UIViewController {
         memeCollectionView.delegate = self
         memeCollectionView.dataSource = self
         
-        let space: CGFloat = 3.0
-        let dimension = (self.view.frame.size.width - (2 * space)) / 3.0
+        memeCollectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
+        memeCollectionView.contentInset = UIEdgeInsetsMake(itemSpacer, itemSpacer, (tabBarController?.tabBar.frame.size.height)!, itemSpacer)
         
-        flowLayout.minimumLineSpacing = space
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.itemSize = CGSizeMake(dimension, dimension)
-        
+        recalculateItemDimension()
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,10 +56,25 @@ class MemeCollectionViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         memeCollectionView.reloadData()
+        recalculateItemDimension()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        recalculateItemDimension()
+    }
+    
+    private func recalculateItemDimension() {
+
+        let dimension = (self.view.frame.size.width - ((itemCount + 1) * itemSpacer)) / itemCount
+        flowLayout.minimumLineSpacing = itemSpacer
+        flowLayout.minimumInteritemSpacing = itemSpacer
+        flowLayout.itemSize = CGSizeMake(dimension, dimension)
+
     }
     
 }

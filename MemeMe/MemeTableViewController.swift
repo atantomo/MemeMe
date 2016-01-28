@@ -12,6 +12,11 @@ class MemeTableViewController: UIViewController {
     
     @IBOutlet weak var memeTableView: UITableView!
     
+    var memes: [Meme]! = {
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        return appDelegate.memes
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +32,9 @@ class MemeTableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        memeTableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -40,14 +46,20 @@ class MemeTableViewController: UIViewController {
 extension MemeTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return memes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        <#code#>
+        let tableCell = tableView.dequeueReusableCellWithIdentifier("MemeTableCell", forIndexPath: indexPath) as! MemeTableViewCell
+        tableCell.memeImageView.image = memes[indexPath.row].memedImage
+        tableCell.topLabel.text = memes[indexPath.row].topText
+        tableCell.bottomLabel.text = memes[indexPath.row].bottomText
+        
+        return tableCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        <#code#>
+        performSegueWithIdentifier("TableDetailSegue", sender: tableView)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

@@ -13,7 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var memes: [Meme] = []
+    var memes = [Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage()),
+    Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage()),
+    Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage()),
+    Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage()),
+    Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage()),
+    Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage())]
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

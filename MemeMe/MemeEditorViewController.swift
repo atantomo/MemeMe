@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController {
 
     let defaultTopText = "TOP"
     let defaultBottomText = "BOTTOM"
@@ -63,9 +63,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             
             if (completed) {
                 self.save(memedImage)
-            }
-            if (activityType == UIActivityTypeSaveToCameraRoll) {
-                self.showConfirmationMessage()
+                if (activityType == UIActivityTypeSaveToCameraRoll) {
+                    self.showConfirmationMessage()
+                }
             }
         }
         presentViewController(activityViewCtrl, animated: true, completion: nil)
@@ -122,6 +122,66 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         prevKeyboardHeight = 0.0
     }
     
+    private func setupMemeTextField(textField: UITextField) {
+        
+        let textAttr = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : -4.0,
+        ]
+        
+        textField.delegate = self
+        textField.defaultTextAttributes = textAttr
+        textField.textAlignment = .Center
+        textField.autocapitalizationType = .AllCharacters
+    }
+    
+    private func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.CGRectValue().height
+        
+    }
+    
+    private func generateMemedImage() -> UIImage {
+        
+        navigationController?.navigationBar.hidden = true
+        pickerToolbar.hidden = true
+        
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
+        
+        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        pickerToolbar.hidden = false
+        navigationController?.navigationBar.hidden = false
+        
+        return memedImage
+    }
+    
+    private func save(memedImage: UIImage) -> () {
+        
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
+            image: memeImageView.image!, memedImage: memedImage)
+        
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
+    }
+    
+    private func showConfirmationMessage() {
+        let alertCtrl = UIAlertController(title: nil, message: saveConfMsg, preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertCtrl.addAction(okAction)
+        presentViewController(alertCtrl, animated: true, completion: nil)
+    }
+}
+
+extension MemeEditorViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -176,63 +236,4 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         return true
     }
     
-    private func setupMemeTextField(textField: UITextField) {
-        
-        let textAttr = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
-            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : -4.0,
-        ]
-        
-        textField.delegate = self
-        textField.defaultTextAttributes = textAttr
-        textField.textAlignment = .Center
-        textField.autocapitalizationType = .AllCharacters
-    }
-    
-    private func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
-        
-    }
-    
-    private func generateMemedImage() -> UIImage {
-        
-        navigationController?.navigationBar.hidden = true
-        pickerToolbar.hidden = true
-        
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
-        
-        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        pickerToolbar.hidden = false
-        navigationController?.navigationBar.hidden = false
-        
-        return memedImage
-    }
-    
-    private func save(memedImage: UIImage) -> Meme {
-        
-        // TODO: Do something with the image (add to collection view, etc.)
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!,
-            image: memeImageView.image!, memedImage: memedImage)
-        
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        appDelegate.memes.append(meme)
-        return meme
-    }
-    
-    private func showConfirmationMessage() {
-        let alertCtrl = UIAlertController(title: nil, message: saveConfMsg, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertCtrl.addAction(okAction)
-        presentViewController(alertCtrl, animated: true, completion: nil)
-    }
 }
-

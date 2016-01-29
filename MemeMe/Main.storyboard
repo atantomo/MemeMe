@@ -101,7 +101,7 @@
             </objects>
             <point key="canvasLocation" x="1115" y="418"/>
         </scene>
-        <!--Meme Collection View Controller-->
+        <!--Grid-->
         <scene sceneID="8os-sC-2zd">
             <objects>
                 <viewController id="fI2-gU-k12" customClass="MemeCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -158,7 +158,7 @@
                             <constraint firstItem="tC2-bS-MBg" firstAttribute="top" secondItem="FUc-sR-df3" secondAttribute="top" id="pLn-Ee-Q6e"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" systemItem="contacts" id="esq-SE-xo8"/>
+                    <tabBarItem key="tabBarItem" title="Grid" image="collection-icon" id="esq-SE-xo8"/>
                     <connections>
                         <outlet property="flowLayout" destination="mdi-pc-gJa" id="huH-Ea-9ss"/>
                         <outlet property="memeCollectionView" destination="tC2-bS-MBg" id="xcK-xK-rIE"/>
@@ -198,7 +198,7 @@
             </objects>
             <point key="canvasLocation" x="351" y="1079"/>
         </scene>
-        <!--Meme Table View Controller-->
+        <!--Table-->
         <scene sceneID="jKb-7p-gra">
             <objects>
                 <viewController id="tR1-ez-ze6" customClass="MemeTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -270,7 +270,7 @@
                             <constraint firstItem="Gtl-mo-EeY" firstAttribute="top" secondItem="Le9-wH-onF" secondAttribute="top" id="y3N-x8-VLQ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="brM-Kh-Inz"/>
+                    <tabBarItem key="tabBarItem" title="Table" image="table-icon" id="brM-Kh-Inz"/>
                     <connections>
                         <outlet property="memeTableView" destination="Gtl-mo-EeY" id="lPi-Jt-liJ"/>
                         <segue destination="x5w-kt-fJv" kind="show" identifier="TableDetailSegue" id="VOd-27-qz3"/>
@@ -342,8 +342,10 @@
     </scenes>
     <resources>
         <image name="album-icon" width="30" height="30"/>
+        <image name="collection-icon" width="30" height="30"/>
+        <image name="table-icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VOd-27-qz3"/>
+        <segue reference="2Gj-lP-Xfj"/>
     </inferredMetricsTieBreakers>
 </document>

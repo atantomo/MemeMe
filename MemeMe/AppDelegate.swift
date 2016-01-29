@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
         Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
         Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
+        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
+        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
         Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!)]
 
 

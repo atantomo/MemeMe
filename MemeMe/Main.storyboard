@@ -193,6 +193,9 @@
                             <constraint firstAttribute="bottom" secondItem="M7a-IK-4t4" secondAttribute="bottom" id="m5B-Hd-LzJ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="memeImageView" destination="M7a-IK-4t4" id="Wn4-vM-RXM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xFL-hu-ggZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -344,6 +347,6 @@
         <image name="album-icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VOd-27-qz3"/>
+        <segue reference="2Gj-lP-Xfj"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -65,9 +65,7 @@ class MemeEditorViewController: UIViewController {
             
             if (completed) {
                 self.save(memedImage)
-                if (activityType == UIActivityTypeSaveToCameraRoll) {
-                    self.showConfirmationMessage()
-                }
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         presentViewController(activityViewCtrl, animated: true, completion: nil)
@@ -172,13 +170,6 @@ class MemeEditorViewController: UIViewController {
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)
-    }
-    
-    private func showConfirmationMessage() {
-        let alertCtrl = UIAlertController(title: nil, message: saveConfMsg, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertCtrl.addAction(okAction)
-        presentViewController(alertCtrl, animated: true, completion: nil)
     }
 }
 

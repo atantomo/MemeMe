@@ -13,21 +13,21 @@ class MemeCollectionViewController: UIViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var memeCollectionView: UICollectionView!
     
+    let collectionSegueId = "CollectionDetailSegue"
+    let collectionReusableId = "MemeCollectionCell"
+    
     let itemSpacer: CGFloat = 8.0
     
     let portraitItemCount: CGFloat = 3.0
     let landscapeItemCount: CGFloat = 5.0
     
+    var selectedIndex = 0
+    
     var itemCount: CGFloat{
         get {
-            switch (UIDevice.currentDevice().orientation) {
-            case .Portrait, .PortraitUpsideDown:
-                return portraitItemCount
-            case .LandscapeLeft, .LandscapeRight:
-                return landscapeItemCount
-            default:
-                return portraitItemCount
-            }
+            let h = view.frame.size.height
+            let w = view.frame.size.width
+            return h > w ? portraitItemCount : landscapeItemCount
         }
     }
     
@@ -42,9 +42,7 @@ class MemeCollectionViewController: UIViewController {
         memeCollectionView.delegate = self
         memeCollectionView.dataSource = self
         
-        memeCollectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
-        memeCollectionView.contentInset = UIEdgeInsetsMake(itemSpacer, itemSpacer, (tabBarController?.tabBar.frame.size.height)!, itemSpacer)
-        
+        setupViewInsets()
         recalculateItemDimension()
     }
     
@@ -59,22 +57,33 @@ class MemeCollectionViewController: UIViewController {
         recalculateItemDimension()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        
         recalculateItemDimension()
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == collectionSegueId) {
+            let memeDetailVc = segue.destinationViewController as! MemeDetailViewController
+            memeDetailVc.selectedMemeIndex = selectedIndex
+        }
+    }
+    
+    private func setupViewInsets() {
+        
+        var tabInset: CGFloat = 0.0
+        if let tabHeight = tabBarController?.tabBar.frame.size.height {
+            tabInset = tabHeight
+        }
+        memeCollectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, tabInset, 0)
+        memeCollectionView.contentInset = UIEdgeInsetsMake(itemSpacer, itemSpacer, tabInset + itemSpacer, itemSpacer)
+    }
+    
     private func recalculateItemDimension() {
-
+        
         let dimension = (self.view.frame.size.width - ((itemCount + 1) * itemSpacer)) / itemCount
         flowLayout.minimumLineSpacing = itemSpacer
         flowLayout.minimumInteritemSpacing = itemSpacer
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
-
     }
     
 }
@@ -87,15 +96,16 @@ extension MemeCollectionViewController: UICollectionViewDataSource, UICollection
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let collectionCell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionCell", forIndexPath: indexPath) as! MemeCollectionViewCell
+        let collectionCell = collectionView.dequeueReusableCellWithReuseIdentifier(collectionReusableId, forIndexPath: indexPath) as! MemeCollectionViewCell
         collectionCell.memeImageView.image = memes[indexPath.row].memedImage
-        
         return collectionCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("CollectionDetailSegue", sender: collectionView)
+        selectedIndex = indexPath.item
+        performSegueWithIdentifier(collectionSegueId, sender: collectionView)
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
     }
+    
 }
 

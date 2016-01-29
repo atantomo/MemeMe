@@ -13,7 +13,12 @@ class MemeTableViewController: UIViewController {
     @IBOutlet weak var memeTableView: UITableView!
     
     var memes: [Meme] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+        get {
+            return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+        }
+        set(updMeme){
+            (UIApplication.sharedApplication().delegate as! AppDelegate).memes = updMeme
+        }
     }
     
     override func viewDidLoad() {
@@ -23,8 +28,7 @@ class MemeTableViewController: UIViewController {
         memeTableView.delegate = self
         memeTableView.dataSource = self
         
-        memeTableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
-        memeTableView.contentInset = UIEdgeInsetsMake(0, 0, (tabBarController?.tabBar.frame.size.height)!, 0)
+        setupViewInsets()
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,6 +49,13 @@ class MemeTableViewController: UIViewController {
         view.updateConstraints()
     }
     
+    private func setupViewInsets() {
+        
+        if let tabHeight = tabBarController?.tabBar.frame.size.height {
+            memeTableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, tabHeight, 0)
+            memeTableView.contentInset = UIEdgeInsetsMake(0, 0, tabHeight, 0)
+        }
+    }
 }
 
 extension MemeTableViewController: UITableViewDataSource, UITableViewDelegate {
@@ -65,5 +76,19 @@ extension MemeTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         performSegueWithIdentifier("TableDetailSegue", sender: tableView)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            print("deleted!")
+            tableView.beginUpdates()
+            memes.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
     }
 }

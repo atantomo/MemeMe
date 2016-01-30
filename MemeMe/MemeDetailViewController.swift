@@ -58,7 +58,7 @@ class MemeDetailViewController: UIViewController {
         
         // if orientation is portrait and meme is landscape, set meme width to canvas'
         // (similar to UIImage's aspect fit behavior)
-        if (cH > cW && mW > mH) {
+        if (cH / cW > mH / mW) {
             memeWidthConstraint.constant = canvasView.frame.size.width
             memeHeightConstraint.constant = canvasView.frame.size.width * (mH / mW)
         } else {

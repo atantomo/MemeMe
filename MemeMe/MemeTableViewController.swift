@@ -12,12 +12,12 @@ class MemeTableViewController: UIViewController {
     
     @IBOutlet weak var memeTableView: UITableView!
     
-    var memes: [Meme] {
+    private var memes: [Meme] {
         get {
             return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
         }
-        set(updMeme){
-            (UIApplication.sharedApplication().delegate as! AppDelegate).memes = updMeme
+        set(updateMeme){
+            (UIApplication.sharedApplication().delegate as! AppDelegate).memes = updateMeme
         }
     }
     
@@ -41,12 +41,13 @@ class MemeTableViewController: UIViewController {
         memeTableView.reloadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        view.updateConstraints()
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "TableDetailSegue") {
+            if let selectedIndex = sender as! Int? {
+                let detVc = segue.destinationViewController as! MemeDetailViewController
+                detVc.selectedIndex = selectedIndex
+            }
+        }
     }
     
     private func setupViewInsets() {
@@ -65,6 +66,7 @@ extension MemeTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let tableCell = tableView.dequeueReusableCellWithIdentifier("MemeTableCell", forIndexPath: indexPath) as! MemeTableViewCell
         tableCell.memeImageView.image = memes[indexPath.row].memedImage
         tableCell.topLabel.text = memes[indexPath.row].topText
@@ -74,21 +76,18 @@ extension MemeTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("TableDetailSegue", sender: tableView)
+        
+        performSegueWithIdentifier("TableDetailSegue", sender: indexPath.row)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if editingStyle == .Delete {
-            print("deleted!")
             tableView.beginUpdates()
             memes.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.endUpdates()
         }
-    }
-    
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
     }
 }

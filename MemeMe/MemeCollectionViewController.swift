@@ -13,17 +13,12 @@ class MemeCollectionViewController: UIViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var memeCollectionView: UICollectionView!
     
-    let collectionSegueId = "CollectionDetailSegue"
-    let collectionReusableId = "MemeCollectionCell"
+    private let itemSpacer: CGFloat = 8.0
     
-    let itemSpacer: CGFloat = 8.0
+    private let portraitItemCount: CGFloat = 3.0
+    private let landscapeItemCount: CGFloat = 5.0
     
-    let portraitItemCount: CGFloat = 3.0
-    let landscapeItemCount: CGFloat = 5.0
-    
-    var selectedIndex = 0
-    
-    var itemCount: CGFloat{
+    private var itemCount: CGFloat{
         get {
             let h = view.frame.size.height
             let w = view.frame.size.width
@@ -31,7 +26,7 @@ class MemeCollectionViewController: UIViewController {
         }
     }
     
-    var memes: [Meme] {
+    private var memes: [Meme] {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
     }
     
@@ -62,9 +57,11 @@ class MemeCollectionViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == collectionSegueId) {
-            let memeDetailVc = segue.destinationViewController as! MemeDetailViewController
-            memeDetailVc.selectedMemeIndex = selectedIndex
+        if (segue.identifier == "CollectionDetailSegue") {
+            if let selectedIndex = sender as! Int? {
+                let detVc = segue.destinationViewController as! MemeDetailViewController
+                detVc.selectedIndex = selectedIndex
+            }
         }
     }
     
@@ -80,6 +77,7 @@ class MemeCollectionViewController: UIViewController {
     
     private func recalculateItemDimension() {
         
+        // add spacing in between items and at both left/right ends
         let dimension = (self.view.frame.size.width - ((itemCount + 1) * itemSpacer)) / itemCount
         flowLayout.minimumLineSpacing = itemSpacer
         flowLayout.minimumInteritemSpacing = itemSpacer
@@ -96,14 +94,14 @@ extension MemeCollectionViewController: UICollectionViewDataSource, UICollection
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let collectionCell = collectionView.dequeueReusableCellWithReuseIdentifier(collectionReusableId, forIndexPath: indexPath) as! MemeCollectionViewCell
+        let collectionCell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionCell", forIndexPath: indexPath) as! MemeCollectionViewCell
         collectionCell.memeImageView.image = memes[indexPath.row].memedImage
         return collectionCell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedIndex = indexPath.item
-        performSegueWithIdentifier(collectionSegueId, sender: collectionView)
+        
+        performSegueWithIdentifier("CollectionDetailSegue", sender: indexPath.item)
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
     }
     

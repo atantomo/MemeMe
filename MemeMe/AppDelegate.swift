@@ -13,18 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var memes = [Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!),
-        Meme(topText: "a", bottomText: "b", image: UIImage(), memedImage: UIImage(named: "sample")!)]
+    var memes = [Meme]()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

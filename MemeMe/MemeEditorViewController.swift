@@ -9,13 +9,13 @@
 import UIKit
 
 class MemeEditorViewController: UIViewController {
-
-    let defaultTopText = "TOP"
-    let defaultBottomText = "BOTTOM"
-    let saveConfMsg = "Your meme has been saved!"
     
     @IBOutlet weak var topTextField: MemeTextField!
     @IBOutlet weak var bottomTextField: MemeTextField!
+    
+    // to determine frame for saving
+    @IBOutlet weak var memeContainerView: UIView!
+    @IBOutlet weak var canvasView: UIView!
     
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -23,19 +23,28 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var pickerToolbar: UIToolbar!
     
-    var prevKeyboardHeight: CGFloat = 0.0
+    @IBOutlet weak var memeHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var memeWidthConstraint: NSLayoutConstraint!
+    
+    var selectedIndex: Int?
+    
+    private let defaultTopText = "TOP"
+    private let defaultBottomText = "BOTTOM"
+    
+    private var activeField: UITextField?
+    private var keyboardPadding: CGFloat = 8.0
+    
+    // to calculate keyboard height difference when switching between languages
+    private var prevKeyboardHeight: CGFloat = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
          // Do any additional setup after loading the view, typically from a nib.
         
         shareButton.enabled = false
-        memeImageView.contentMode = .ScaleAspectFit
         
         setupMemeTextField(topTextField)
         setupMemeTextField(bottomTextField)
-        
-        memeImageView.image?.size
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,7 +57,27 @@ class MemeEditorViewController: UIViewController {
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         subscribeToKeyboardNotifications()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
+        if let memeImage = memeImageView.image {
+            setMemeImageLayout(memeImage)
+        }
+        
+        // in case of 'edit', existing meme data is only set once
+        if let index = selectedIndex {
+            
+            let meme = (UIApplication.sharedApplication().delegate as! AppDelegate).memes[index]
+            setupMeme(meme)
+            shareButton.enabled = true
+            selectedIndex = nil
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -109,10 +138,17 @@ class MemeEditorViewController: UIViewController {
     
     func keyboardWillShow(notification: NSNotification) {
         
+        guard let active = activeField else {
+            return
+        }
+        
+        let activeFieldY = memeContainerView.convertPoint(active.frame.origin, toView: view).y
         let keyboardHeight = getKeyboardHeight(notification)
+        let textFieldBase = view.frame.size.height - (activeFieldY + active.frame.size.height)
 
-        if (bottomTextField.isFirstResponder()) {
-            view.frame.origin.y = view.frame.origin.y - (keyboardHeight  - prevKeyboardHeight)
+        // need comparison because the base position of the UITextField varies depending on image size
+        if (keyboardHeight > textFieldBase) {
+            view.frame.origin.y = 0 - keyboardPadding - (keyboardHeight - textFieldBase)
             prevKeyboardHeight = keyboardHeight
         }
     }
@@ -120,6 +156,13 @@ class MemeEditorViewController: UIViewController {
     func keyboardWillHide(notification: NSNotification) {
         view.frame.origin.y = 0
         prevKeyboardHeight = 0.0
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        if let memeImage = memeImageView.image {
+            setMemeImageLayout(memeImage)
+        }
     }
     
     private func setupMemeTextField(textField: UITextField) {
@@ -147,17 +190,12 @@ class MemeEditorViewController: UIViewController {
     
     private func generateMemedImage() -> UIImage {
         
-        navigationController?.navigationBar.hidden = true
-        pickerToolbar.hidden = true
+        let drawingRect = CGRectMake(0, 0, memeContainerView.frame.size.width, memeContainerView.frame.size.height)
         
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
-        
+        UIGraphicsBeginImageContext(memeContainerView.frame.size)
+        memeContainerView.drawViewHierarchyInRect(drawingRect, afterScreenUpdates: false)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
-        pickerToolbar.hidden = false
-        navigationController?.navigationBar.hidden = false
         
         return memedImage
     }
@@ -169,7 +207,34 @@ class MemeEditorViewController: UIViewController {
         
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
-        appDelegate.memes.append(meme)
+        appDelegate.memes.insert(meme, atIndex: 0)
+    }
+    
+    private func setupMeme(meme: Meme) {
+        
+        topTextField.text = meme.topText
+        bottomTextField.text = meme.bottomText
+        memeImageView.image = meme.image
+        setMemeImageLayout(meme.image)
+    }
+    
+    private func setMemeImageLayout(memeImage: UIImage) {
+        
+        let mW = memeImage.size.width
+        let mH = memeImage.size.height
+        let cW = canvasView.frame.size.width
+        let cH = canvasView.frame.size.height
+        
+        // if orientation is portrait and meme is landscape, set meme width to canvas'
+        // (similar to UIImage's aspect fit behavior)
+        if (cH > cW && mW > mH) {
+            memeWidthConstraint.constant = canvasView.frame.size.width
+            memeHeightConstraint.constant = canvasView.frame.size.width * (mH / mW)
+        } else {
+            // otherwise, set meme height to canvas'
+            memeHeightConstraint.constant = canvasView.frame.size.height
+            memeWidthConstraint.constant = canvasView.frame.size.height * (mW / mH)
+        }
     }
 }
 
@@ -190,6 +255,7 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
+        activeField = textField
         if let memeTextField = textField as? MemeTextField {
             // Only clear default text (texts created by user should not be removed)
             if (!memeTextField.edited) {

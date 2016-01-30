@@ -18,25 +18,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vm2-UF-zq3">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jh9-jG-xTN">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="PSE-eQ-cT8" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="20" y="72" width="560" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="textFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="20P-iN-Wub"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="LKY-S4-edb" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="20" y="514" width="560" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="textFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="o7f-Cz-FeP"/>
-                                </connections>
-                            </textField>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Lu-h4-SQt">
+                                        <rect key="frame" x="0.0" y="116" width="600" height="260"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vm2-UF-zq3">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="260"/>
+                                            </imageView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="PSE-eQ-cT8" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="8" width="560" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="20P-iN-Wub"/>
+                                                </connections>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="LKY-S4-edb" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="211" width="560" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="o7f-Cz-FeP"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="260" id="04c-zA-82k"/>
+                                            <constraint firstAttribute="width" constant="600" id="3il-g5-Tcf"/>
+                                            <constraint firstAttribute="bottom" secondItem="LKY-S4-edb" secondAttribute="bottom" constant="15" id="SuR-Se-sXF"/>
+                                            <constraint firstAttribute="trailing" secondItem="PSE-eQ-cT8" secondAttribute="trailing" constant="20" id="VWL-lw-nmQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="Vm2-UF-zq3" secondAttribute="trailing" id="XJu-Pk-mBK"/>
+                                            <constraint firstAttribute="bottom" secondItem="Vm2-UF-zq3" secondAttribute="bottom" id="e0w-g9-kUJ"/>
+                                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="leading" secondItem="3Lu-h4-SQt" secondAttribute="leading" constant="20" id="h9s-RS-RK6"/>
+                                            <constraint firstAttribute="trailing" secondItem="LKY-S4-edb" secondAttribute="trailing" constant="20" id="iEw-rb-qDh"/>
+                                            <constraint firstItem="Vm2-UF-zq3" firstAttribute="top" secondItem="3Lu-h4-SQt" secondAttribute="top" id="sL6-UC-tUu"/>
+                                            <constraint firstItem="LKY-S4-edb" firstAttribute="leading" secondItem="3Lu-h4-SQt" secondAttribute="leading" constant="20" id="vp1-es-JLF"/>
+                                            <constraint firstItem="Vm2-UF-zq3" firstAttribute="leading" secondItem="3Lu-h4-SQt" secondAttribute="leading" id="z5K-so-6aV"/>
+                                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="top" secondItem="3Lu-h4-SQt" secondAttribute="top" constant="8" id="ze9-dB-m5F"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="3Lu-h4-SQt" firstAttribute="centerY" secondItem="Jh9-jG-xTN" secondAttribute="centerY" id="ME9-7O-SHF"/>
+                                    <constraint firstItem="3Lu-h4-SQt" firstAttribute="centerX" secondItem="Jh9-jG-xTN" secondAttribute="centerX" id="tkC-iH-Z9p"/>
+                                </constraints>
+                            </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jzg-xc-NEY">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
@@ -56,23 +86,15 @@
                                 </items>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LKY-S4-edb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="AeN-We-eID"/>
-                            <constraint firstItem="Vm2-UF-zq3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BHU-pR-knM"/>
-                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="SxJ-8F-Mkw"/>
-                            <constraint firstItem="Vm2-UF-zq3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="TWa-Pr-GcC"/>
-                            <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="LKY-S4-edb" secondAttribute="bottom" constant="8" id="WXM-Gy-Lzo"/>
-                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bR7-k4-7gb"/>
-                            <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="Vm2-UF-zq3" secondAttribute="bottom" id="eU2-vV-m2n"/>
+                            <constraint firstItem="Jh9-jG-xTN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="23l-Cc-7MV"/>
+                            <constraint firstItem="Jh9-jG-xTN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BE3-0N-B8m"/>
+                            <constraint firstItem="Jzg-xc-NEY" firstAttribute="top" secondItem="Jh9-jG-xTN" secondAttribute="bottom" id="Jns-AI-kml"/>
+                            <constraint firstAttribute="trailing" secondItem="Jh9-jG-xTN" secondAttribute="trailing" id="QV2-eE-sfG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Jzg-xc-NEY" secondAttribute="bottom" id="fBd-az-ufH"/>
-                            <constraint firstAttribute="trailing" secondItem="PSE-eQ-cT8" secondAttribute="trailing" constant="20" id="jr1-3z-klp"/>
                             <constraint firstAttribute="trailing" secondItem="Jzg-xc-NEY" secondAttribute="trailing" id="lB4-ei-Usq"/>
                             <constraint firstItem="Jzg-xc-NEY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="mT4-1q-6Xy"/>
-                            <constraint firstAttribute="trailing" secondItem="Vm2-UF-zq3" secondAttribute="trailing" id="qyQ-3L-8YB"/>
-                            <constraint firstAttribute="trailing" secondItem="LKY-S4-edb" secondAttribute="trailing" constant="20" id="raJ-FM-gnQ"/>
-                            <constraint firstItem="LKY-S4-edb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wvk-Nw-D1t"/>
-                            <constraint firstItem="PSE-eQ-cT8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="yC3-oV-WKY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Meme Editor" id="reC-en-EAJ">
@@ -91,7 +113,11 @@
                         <outlet property="albumButton" destination="A2X-pz-fjJ" id="2HZ-BX-Mfe"/>
                         <outlet property="bottomTextField" destination="LKY-S4-edb" id="Ase-2e-eZS"/>
                         <outlet property="cameraButton" destination="b06-ZH-jg7" id="Fec-uE-nfK"/>
+                        <outlet property="canvasView" destination="Jh9-jG-xTN" id="y2v-Or-cp0"/>
+                        <outlet property="memeContainerView" destination="3Lu-h4-SQt" id="87P-6j-XCP"/>
+                        <outlet property="memeHeightConstraint" destination="04c-zA-82k" id="Zgp-Vk-uqt"/>
                         <outlet property="memeImageView" destination="Vm2-UF-zq3" id="Fub-gC-Ti4"/>
+                        <outlet property="memeWidthConstraint" destination="3il-g5-Tcf" id="gSV-eX-Re7"/>
                         <outlet property="pickerToolbar" destination="Jzg-xc-NEY" id="oJ6-HR-qre"/>
                         <outlet property="shareButton" destination="vgZ-O3-CQa" id="iJg-VY-BtT"/>
                         <outlet property="topTextField" destination="PSE-eQ-cT8" id="0aQ-u7-2zt"/>
@@ -169,10 +195,10 @@
             </objects>
             <point key="canvasLocation" x="-410" y="1079"/>
         </scene>
-        <!--Meme Editor-->
+        <!--Meme Detail-->
         <scene sceneID="p7W-zo-Kav">
             <objects>
-                <viewController title="Meme Editor" id="x5w-kt-fJv" customClass="MemeDetailViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Meme Detail" id="x5w-kt-fJv" customClass="MemeDetailViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Kmv-nw-ZaS"/>
                         <viewControllerLayoutGuide type="bottom" id="8hY-eb-2AG"/>
@@ -181,20 +207,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M7a-IK-4t4">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I7c-41-FBe">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M7a-IK-4t4">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="492" id="31I-x9-gQ0"/>
+                                            <constraint firstAttribute="width" constant="600" id="biZ-hV-gi2"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="M7a-IK-4t4" firstAttribute="centerX" secondItem="I7c-41-FBe" secondAttribute="centerX" id="6va-8f-Gc6"/>
+                                    <constraint firstItem="M7a-IK-4t4" firstAttribute="centerY" secondItem="I7c-41-FBe" secondAttribute="centerY" id="PEx-Tw-svN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="M7a-IK-4t4" firstAttribute="leading" secondItem="fri-gg-u7f" secondAttribute="leading" id="LOA-ze-mlf"/>
-                            <constraint firstAttribute="trailing" secondItem="M7a-IK-4t4" secondAttribute="trailing" id="NTZ-mR-aBH"/>
-                            <constraint firstItem="M7a-IK-4t4" firstAttribute="top" secondItem="fri-gg-u7f" secondAttribute="top" id="QGO-bc-7cf"/>
-                            <constraint firstAttribute="bottom" secondItem="M7a-IK-4t4" secondAttribute="bottom" id="m5B-Hd-LzJ"/>
+                            <constraint firstItem="I7c-41-FBe" firstAttribute="top" secondItem="Kmv-nw-ZaS" secondAttribute="bottom" id="Pwc-C9-L5G"/>
+                            <constraint firstAttribute="trailing" secondItem="I7c-41-FBe" secondAttribute="trailing" id="aqc-I3-qnI"/>
+                            <constraint firstItem="8hY-eb-2AG" firstAttribute="top" secondItem="I7c-41-FBe" secondAttribute="bottom" id="hSF-jm-jmo"/>
+                            <constraint firstItem="I7c-41-FBe" firstAttribute="leading" secondItem="fri-gg-u7f" secondAttribute="leading" id="q2a-A6-14I"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="canvasView" destination="I7c-41-FBe" id="3j7-9b-y0d"/>
+                        <outlet property="memeHeightConstraint" destination="31I-x9-gQ0" id="OB5-D1-uRq"/>
                         <outlet property="memeImageView" destination="M7a-IK-4t4" id="Wn4-vM-RXM"/>
+                        <outlet property="memeWidthConstraint" destination="biZ-hV-gi2" id="bI1-YX-CJk"/>
+                        <segue destination="qXj-F1-eL2" kind="presentation" identifier="DetailEditSegue" id="gsb-Hb-6qJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xFL-hu-ggZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -349,6 +395,7 @@
         <image name="table-icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="85U-2x-byU"/>
         <segue reference="2Gj-lP-Xfj"/>
     </inferredMetricsTieBreakers>
 </document>

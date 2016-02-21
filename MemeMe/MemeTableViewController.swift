@@ -16,8 +16,8 @@ class MemeTableViewController: UIViewController {
         get {
             return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
         }
-        set(updateMeme){
-            (UIApplication.sharedApplication().delegate as! AppDelegate).memes = updateMeme
+        set {
+            (UIApplication.sharedApplication().delegate as! AppDelegate).memes = newValue
         }
     }
     

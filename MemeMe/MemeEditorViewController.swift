@@ -270,7 +270,7 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate, UINavigatio
             
             // Trim excess whitespaces
             var newText = memeTextField.text! as NSString
-            newText = newText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            newText = newText.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
             memeTextField.text = newText as String
             
             // Restore default text when text field is empty after editing
